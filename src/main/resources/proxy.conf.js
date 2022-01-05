@@ -1,4 +1,4 @@
-const HttpsProxyAgent = require('https-proxy-agent');
+const HttpsProxyAgent = require('@working.directory@/node_modules/https-proxy-agent');
 
 /*
  * API proxy configuration.
@@ -10,7 +10,7 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    target: 'http://localhost:8080/rest',
+    target: @rest.api.url@,
     //changeOrigin: true,
     secure: false
   }

@@ -10,8 +10,12 @@
     <groupId>org.eart.front</groupId>
     <artifactId>front</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <properties>
+        <working.directory>${project.basedir}/src/main/ngapp</working.directory>
+    </properties>
 
     <build>
+        <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -42,25 +46,10 @@
                         <id>exec-npm-install</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/front</workingDirectory>
+                            <workingDirectory>${working.directory}</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>install</argument>
-                            </arguments>
-                        </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>exec-npm-ng-build</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <workingDirectory>${project.basedir}/src/main/ngapp</workingDirectory>
-                            <executable>ng</executable>
-                            <arguments>
-                                <argument>build</argument>
-                                <argument>--base-href=/ngfirst/ng/</argument>
                             </arguments>
                         </configuration>
                         <goals>
@@ -71,5 +60,37 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>start</id>
+            <build>
+                <defaultGoal>install</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>exec-npm-start</id>
+                                <phase>install</phase>
+                                <configuration>
+                                    <workingDirectory>${working.directory}</workingDirectory>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>start</argument>
+                                    </arguments>
+                                </configuration>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
 
